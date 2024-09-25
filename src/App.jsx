@@ -3,26 +3,30 @@ import { useState } from "react";
 import "./App.css";
 
 function App() {
-  const [firstNumber, setFirstNumber] = useState(0);
-  const [secondNumber, setSecondNumber] = useState(0);
+  const [firstNumber, setFirstNumber] = useState('0');
+  const [secondNumber, setSecondNumber] = useState('0');
   const [operator, setOperator] = useState("+");
   const [result, setResult] = useState(0);
 
   const handleFirstNumber = (target) => {
     const number = target.target.innerText;
     if (number == "Clear") {
-      setFirstNumber(0);
-    } else {
+      setFirstNumber('0');
+    } else if (firstNumber === '0') {
       setFirstNumber(number);
+    } else {
+      setFirstNumber(firstNumber + number);
     }
   };
 
   const handleSecondNumber = (target) => {
     const number = target.target.innerText;
     if (number == "Clear") {
-      setSecondNumber(0);
-    } else {
+      setSecondNumber('0');
+    } else if (secondNumber === '0') {
       setSecondNumber(number);
+    } else {
+      setSecondNumber(secondNumber + number);
     }
   };
 
@@ -31,6 +35,8 @@ function App() {
   };
 
   const handleCalculation = () => {
+
+
     switch (operator) {
       case "+":
         setResult(parseInt(firstNumber) + parseInt(secondNumber));
