@@ -3,16 +3,17 @@ import { useState } from "react";
 import "./App.css";
 
 function App() {
-  const [firstNumber, setFirstNumber] = useState('0');
-  const [secondNumber, setSecondNumber] = useState('0');
+  const [firstNumber, setFirstNumber] = useState("0");
+  const [secondNumber, setSecondNumber] = useState("0");
   const [operator, setOperator] = useState("+");
-  const [result, setResult] = useState(0);
+  const [result, setResult] = useState("0");
+  const [stored, setStored] = useState(null);
 
   const handleFirstNumber = (target) => {
     const number = target.target.innerText;
     if (number == "Clear") {
-      setFirstNumber('0');
-    } else if (firstNumber === '0') {
+      setFirstNumber("0");
+    } else if (firstNumber === "0") {
       setFirstNumber(number);
     } else {
       setFirstNumber(firstNumber + number);
@@ -22,8 +23,8 @@ function App() {
   const handleSecondNumber = (target) => {
     const number = target.target.innerText;
     if (number == "Clear") {
-      setSecondNumber('0');
-    } else if (secondNumber === '0') {
+      setSecondNumber("0");
+    } else if (secondNumber === "0") {
       setSecondNumber(number);
     } else {
       setSecondNumber(secondNumber + number);
@@ -35,8 +36,6 @@ function App() {
   };
 
   const handleCalculation = () => {
-
-
     switch (operator) {
       case "+":
         setResult(parseInt(firstNumber) + parseInt(secondNumber));
@@ -52,6 +51,26 @@ function App() {
         break;
       default:
         setResult("ERROR");
+    }
+  };
+
+  const handleSetStored = () => {
+    setStored(result);
+  };
+
+  const recallFirstNumber = () => {
+    if (stored === null) {
+      setFirstNumber("0");
+    } else {
+      setFirstNumber(stored);
+    }
+  };
+
+  const recallSecondNumber = () => {
+    if (stored === null) {
+      setSecondNumber("0");
+    } else {
+      setSecondNumber(stored);
     }
   };
 
@@ -71,6 +90,9 @@ function App() {
           <button onClick={handleFirstNumber}>9</button>
           <button onClick={handleFirstNumber}>0</button>
           <button onClick={handleFirstNumber}>Clear</button>
+        </div>
+        <div>
+          <button onClick={recallFirstNumber}>Recall</button>
         </div>
       </div>
 
@@ -99,12 +121,21 @@ function App() {
           <button onClick={handleSecondNumber}>0</button>
           <button onClick={handleSecondNumber}>Clear</button>
         </div>
+        <div>
+          <button onClick={recallSecondNumber}>Recall</button>
+        </div>
       </div>
       <div className="panel answer">
         <p>{result}</p>
         <div>
           <button onClick={handleCalculation}>=</button>
         </div>
+        <div>
+          <button onClick={handleSetStored}>Store</button>
+        </div>
+      </div>
+      <div>
+        <p>Currently storing answer: {stored}</p>
       </div>
     </div>
   );
